@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Campaigns | Commonplace{% endblock %}
+{% block content %}
+  <div class="feed-heading">
+    <div><p class="eyebrow">Advertiser workspace</p><h1>Your campaigns</h1></div>
+    <a class="button" href="{% url 'campaign-create' %}">Create campaign</a>
+  </div>
+  <section class="feed-column">
+    {% for campaign in campaigns %}
+      <article class="panel">
+        <p class="eyebrow">{{ campaign.get_status_display }}</p>
+        <h2><a href="{% url 'campaign-detail' campaign.pk %}">{{ campaign.name }}</a></h2>
+        <p>{{ campaign.headline }} · {{ campaign.formatted_budget }}</p>
+        <p class="muted">{{ campaign.starts_at|date:"M j, Y H:i" }} – {{ campaign.ends_at|date:"M j, Y H:i" }}</p>
+      </article>
+    {% empty %}
+      <div class="panel empty-state"><p>No campaigns yet.</p><a href="{% url 'campaign-create' %}">Create your first campaign</a></div>
+    {% endfor %}
+  </section>
+{% endblock %}

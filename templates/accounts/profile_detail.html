@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.display_name }} | Commonplace{% endblock %}
+{% block content %}
+  <section class="panel profile-header">
+    <div>
+      <p class="eyebrow">@{{ profile_user.username }}</p>
+      <h1>{{ profile.display_name }}</h1>
+      {% if profile.biography %}<p>{{ profile.biography|linebreaksbr }}</p>{% endif %}
+      <p class="muted">{{ follower_count }} followers · {{ following_count }} following</p>
+    </div>
+    <div class="profile-actions">
+      {% if request.user == profile_user %}
+        <a class="button secondary" href="{% url 'profile-edit' %}">Edit profile</a>
+        <a class="button" href="{% url 'post-create' %}">New post</a>
+      {% elif is_following %}
+        <form method="post" action="{% url 'unfollow' profile_user.username %}">{% csrf_token %}<button class="secondary" type="submit">Unfollow</button></form>
+      {% else %}
+        <form method="post" action="{% url 'follow' profile_user.username %}">{% csrf_token %}<button type="submit">Follow</button></form>
+      {% endif %}
+    </div>
+  </section>
+  <section class="feed-column">
+    <h2>Posts</h2>
+    {% for post in posts %}{% include "social/_post.html" %}{% empty %}<p class="muted">No posts yet.</p>{% endfor %}
+  </section>
+{% endblock %}

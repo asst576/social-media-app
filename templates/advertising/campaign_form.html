@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{% if campaign %}Edit campaign{% else %}Create campaign{% endif %} | Commonplace{% endblock %}
+{% block content %}
+  <section class="panel narrow">
+    <h1>{% if campaign %}Edit campaign{% else %}Create campaign{% endif %}</h1>
+    <p class="muted">The amount is for a simulated purchase only. No money is transferred. Approved campaigns run during the date range you select.</p>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}{{ form.as_p }}
+      <button type="submit">Save draft</button>
+    </form>
+  </section>
+{% endblock %}

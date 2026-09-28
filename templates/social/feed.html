@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Your feed | Commonplace{% endblock %}
+{% block content %}
+  <div class="feed-heading">
+    <div><p class="eyebrow">Your circle</p><h1>Home feed</h1></div>
+    <a class="button" href="{% url 'post-create' %}">Write a post</a>
+  </div>
+  <section class="feed-column" aria-label="Posts and sponsored content">
+    {% for item in feed_items %}
+      {% if item.kind == "post" %}
+        {% with post=item.post %}{% include "social/_post.html" %}{% endwith %}
+      {% else %}
+        {% include "advertising/_sponsored_campaign.html" with campaign=item.campaign %}
+      {% endif %}
+    {% empty %}
+      <div class="panel empty-state">
+        <h2>Your feed starts here</h2>
+        <p>Create a post or follow another member to see their posts here.</p>
+        <a href="{% url 'post-create' %}">Write your first post</a>
+      </div>
+    {% endfor %}
+  </section>
+  {% if page_obj.has_other_pages %}
+    <nav class="pagination" aria-label="Feed pages">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Newer</a>{% endif %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Older</a>{% endif %}
+    </nav>
+  {% endif %}
+{% endblock %}

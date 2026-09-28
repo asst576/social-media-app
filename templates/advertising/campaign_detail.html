@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ campaign.name }} | Campaigns{% endblock %}
+{% block content %}
+  <section class="panel">
+    <p class="eyebrow">{{ campaign.get_status_display }}{% if is_active %} · Delivering{% endif %}</p>
+    <h1>{{ campaign.name }}</h1>
+    <h2>{{ campaign.headline }}</h2>
+    <p>{{ campaign.body|linebreaksbr }}</p>
+    {% if campaign.image %}<img class="post-image" src="{{ campaign.image.url }}" alt="Campaign image for {{ campaign.headline }}">{% endif %}
+    <dl class="campaign-facts">
+      <div><dt>Demo budget</dt><dd>{{ campaign.formatted_budget }}</dd></div>
+      <div><dt>Starts</dt><dd>{{ campaign.starts_at|date:"M j, Y H:i" }}</dd></div>
+      <div><dt>Ends</dt><dd>{{ campaign.ends_at|date:"M j, Y H:i" }}</dd></div>
+      <div><dt>Demo purchase</dt><dd>{% if campaign.simulated_paid %}Recorded; no money transferred{% else %}Not recorded{% endif %}</dd></div>
+    </dl>
+    <div class="campaign-actions">
+      {% if campaign.status == "draft" or campaign.status == "rejected" %}
+        <a class="button secondary" href="{% url 'campaign-edit' campaign.pk %}">Edit</a>
+        <form method="post" action="{% url 'campaign-submit' campaign.pk %}">{% csrf_token %}<button type="submit">Submit for staff review</button></form>
+      {% endif %}
+      {% if campaign.status == "approved" and not campaign.simulated_paid %}
+        <form method="post" action="{% url 'campaign-purchase' campaign.pk %}">
+          {% csrf_token %}<button type="submit">Simulate purchase · {{ campaign.formatted_budget }}</button>
+        </form>
+      {% endif %}
+    </div>
+    <p class="muted">A campaign appears in feeds only after staff approval and simulated purchase, and during its scheduled dates. Feed impressions do not reduce this demo budget.</p>
+  </section>
+{% endblock %}

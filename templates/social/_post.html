@@ -1,0 +1,13 @@
+<article class="panel post-card">
+  {% if post.repost_of %}
+    <p class="eyebrow">{{ post.author.profile.display_name }} reposted</p>
+    {% with post=post.repost_of %}{% include "social/_original_post.html" %}{% endwith %}
+  {% else %}
+    {% include "social/_original_post.html" %}
+    {% if user.is_authenticated and post.author != user %}
+      <form method="post" action="{% url 'repost' post.pk %}" class="post-action">
+        {% csrf_token %}<button class="link-button" type="submit">Repost</button>
+      </form>
+    {% endif %}
+  {% endif %}
+</article>

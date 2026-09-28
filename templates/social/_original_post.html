@@ -1,0 +1,6 @@
+<div class="post-author">
+  <a href="{% url 'profile-detail' post.author.username %}">{{ post.author.profile.display_name }}</a>
+  <span class="muted">@{{ post.author.username }} · {{ post.created_at|date:"M j, Y H:i" }}</span>
+</div>
+{% if post.body %}<p class="post-body">{{ post.body|linebreaksbr }}</p>{% endif %}
+{% if post.image %}<img class="post-image" src="{{ post.image.url }}" alt="Image shared by {{ post.author.profile.display_name }}" loading="lazy">{% endif %}

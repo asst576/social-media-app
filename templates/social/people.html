@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}People | Commonplace{% endblock %}
+{% block content %}
+  <div class="feed-heading">
+    <div><p class="eyebrow">Find your circle</p><h1>People</h1></div>
+  </div>
+  <section class="feed-column" aria-label="Members">
+    {% for person in page_obj %}
+      <article class="panel member-card">
+        <div>
+          <a class="member-name" href="{% url 'profile-detail' person.username %}">{{ person.profile.display_name }}</a>
+          <p class="muted">@{{ person.username }}</p>
+        </div>
+        {% if person.is_following %}
+          <form method="post" action="{% url 'unfollow' person.username %}">{% csrf_token %}<button class="secondary" type="submit">Unfollow</button></form>
+        {% else %}
+          <form method="post" action="{% url 'follow' person.username %}">{% csrf_token %}<button type="submit">Follow</button></form>
+        {% endif %}
+      </article>
+    {% empty %}
+      <div class="panel empty-state"><p>No other members yet. Check back later.</p></div>
+    {% endfor %}
+  </section>
+  {% if page_obj.has_other_pages %}
+    <nav class="pagination" aria-label="People pages">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+    </nav>
+  {% endif %}
+{% endblock %}
