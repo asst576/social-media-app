@@ -6,5 +6,5 @@
   </p>
   <h2>{{ campaign.headline }}</h2>
   <p>{{ campaign.body|linebreaksbr }}</p>
-  {% if campaign.image %}<img class="post-image" src="{{ campaign.image.url }}" alt="Sponsored image for {{ campaign.headline }}" loading="lazy">{% endif %}
+  {% if campaign.image %}<img class="post-image" src="{{ request.META.SCRIPT_NAME }}{{ campaign.image.url }}" alt="Sponsored image for {{ campaign.headline }}" loading="lazy">{% endif %}
 </article>

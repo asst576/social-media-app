@@ -15,7 +15,7 @@ python manage.py runserver 0.0.0.0:5001
 
 Open the local CodeRange preview on port `5001`. The SQLite database is `db.sqlite3`; uploaded files are stored under `media/` during local development. Both are ignored by Git.
 
-The local development settings default to `DJANGO_DEBUG=1` and allow `localhost`/`127.0.0.1`. If no `DJANGO_SECRET_KEY` is supplied in debug mode, the process generates a temporary key, so sessions will not survive a server restart. Configure `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, and comma-separated `DJANGO_ALLOWED_HOSTS` environment variables for the runtime. Non-debug mode requires an explicit secret. Do not use debug mode for a public deployment.
+The local development settings default to `DJANGO_DEBUG=1` and allow `localhost`/`127.0.0.1`. CodeRange mount handling normalizes its `/proxy/5001/` path or script name for the configured host, without forcing a second prefix into Django URL reversing. If no `DJANGO_SECRET_KEY` is supplied in debug mode, the process generates a temporary key, so sessions will not survive a server restart. Configure `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, and comma-separated `DJANGO_ALLOWED_HOSTS` environment variables for the runtime. Non-debug mode requires an explicit secret. Do not use debug mode for a public deployment.
 
 ## Accounts and Roles
 

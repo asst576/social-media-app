@@ -3,4 +3,4 @@
   <span class="muted">@{{ post.author.username }} · {{ post.created_at|date:"M j, Y H:i" }}</span>
 </div>
 {% if post.body %}<p class="post-body">{{ post.body|linebreaksbr }}</p>{% endif %}
-{% if post.image %}<img class="post-image" src="{{ post.image.url }}" alt="Image shared by {{ post.author.profile.display_name }}" loading="lazy">{% endif %}
+{% if post.image %}<img class="post-image" src="{{ request.META.SCRIPT_NAME }}{{ post.image.url }}" alt="Image shared by {{ post.author.profile.display_name }}" loading="lazy">{% endif %}

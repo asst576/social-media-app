@@ -4,7 +4,7 @@
   <section class="panel narrow">
     <h1>Write a post</h1>
     <p class="muted">Add text, one image, or both. Images may be JPEG, PNG, or WebP up to 5 MiB.</p>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" action="{% url 'post-create' %}" enctype="multipart/form-data">
       {% csrf_token %}{{ form.as_p }}
       <button type="submit">Publish</button>
     </form>

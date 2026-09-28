@@ -6,7 +6,7 @@
     <h1>{{ campaign.name }}</h1>
     <h2>{{ campaign.headline }}</h2>
     <p>{{ campaign.body|linebreaksbr }}</p>
-    {% if campaign.image %}<img class="post-image" src="{{ campaign.image.url }}" alt="Campaign image for {{ campaign.headline }}">{% endif %}
+    {% if campaign.image %}<img class="post-image" src="{{ request.META.SCRIPT_NAME }}{{ campaign.image.url }}" alt="Campaign image for {{ campaign.headline }}">{% endif %}
     <dl class="campaign-facts">
       <div><dt>Demo budget</dt><dd>{{ campaign.formatted_budget }}</dd></div>
       <div><dt>Starts</dt><dd>{{ campaign.starts_at|date:"M j, Y H:i" }}</dd></div>

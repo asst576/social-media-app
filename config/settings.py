@@ -33,13 +33,32 @@ if not SECRET_KEY:
         raise ImproperlyConfigured("Set DJANGO_SECRET_KEY when debug mode is disabled.")
     SECRET_KEY = secrets.token_urlsafe(50)
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.environ.get(
-        "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1"
-    ).split(",")
-    if host.strip()
-]
+CODE_RANGE_HOST = "itent-45-1t-2526-p23.coderange.net"
+CODE_RANGE_ORIGIN = f"https://{CODE_RANGE_HOST}"
+CODE_RANGE_SCRIPT_NAME = "/proxy/5001"
+
+ALLOWED_HOSTS = sorted(
+    {
+        "localhost",
+        "127.0.0.1",
+        CODE_RANGE_HOST,
+        *(
+            host.strip()
+            for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+            if host.strip()
+        ),
+    }
+)
+CSRF_TRUSTED_ORIGINS = sorted(
+    {
+        CODE_RANGE_ORIGIN,
+        *(
+            origin.strip()
+            for origin in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+            if origin.strip()
+        ),
+    }
+)
 
 
 # Application definition
@@ -58,6 +77,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'config.middleware.CodeRangeProxyPrefixMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
