@@ -1,5 +1,4 @@
 # TODO
 
-- [ ] During the explicit `sync docs` phase, add living documentation under `doc/wiki/` and record operational footguns under `doc/wiki/footguns/`.
-- [ ] Before public deployment, configure a production secret, disable debug mode, set allowed hosts, and verify CodeRange's persistent media-storage/serving support.
-- [ ] Retry CodeRange port `5001` startup when the unrelated process currently occupying that local port is released by the environment.
+- [ ] Before public deployment, configure a stable secret, disable debug mode, set deployment-specific allowed hosts and CSRF trusted origins, and verify persistent media storage/serving.
+- [x] Verify the application on CodeRange port `5001` and normalize the `/proxy/5001/` mount without duplicate prefixes.
