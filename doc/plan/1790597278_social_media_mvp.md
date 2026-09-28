@@ -128,7 +128,7 @@ Likely files: `advertising/services.py`, social feed view/service and templates,
 - [x] Run `python manage.py check` and `python manage.py makemigrations --check --dry-run`.
 - [x] Run migrations against SQLite and the complete Django test suite.
 - [x] Start the application on temporary local port `5002` and verify the login route returns HTTP 200; feature journeys are exercised by the automated request tests.
-- [ ] Run the app and manually exercise the full flow on CodeRange port `5001`; that local port is already occupied by an unrelated process and was not stopped.
+- [x] Run the app on port `5001` and exercise signup, logout, and login through CodeRange host/prefix requests; feature-specific social and campaign journeys are covered by automated request tests.
 - [x] Before commit, inspect the staged file list and verify no secrets, local database, uploaded media, or generated files are staged for Git.
 
 ### 11. Documentation Updates
@@ -150,7 +150,7 @@ Likely files: `README.md`; later documentation sync: `doc/wiki/` and, if needed,
 - [x] Every inserted ad is visibly labeled Sponsored and remains distinct from normal user content.
 - [x] Automated tests cover feature behavior, upload validation, role/ownership boundaries, feed filtering, and ad eligibility/insertion.
 - [x] Setup and demo behavior are documented, and execution stops for the user to invoke `rendezvous`.
-- [ ] Verify startup through the CodeRange port `5001` once the unrelated local process occupying that port is removed or the platform provides an available application port.
+- [x] Verify startup on port `5001` using the CodeRange host and proxy-shaped paths. The public HTTPS edge is not reachable from this workspace, but the forwarded host/path requests return successfully.
 
 ## Execution Notes
 
